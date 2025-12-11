@@ -1,0 +1,106 @@
+body{
+    background-color: white;
+    font-family: "Geom", sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    transition: background-color 0.2s ease-in-out;
+}
+
+h1{
+    font-family: "Mozilla Headline", sans-serif;
+}
+
+.top-nav{
+    display: flex;
+    justify-content: space-around;
+    background-color: #1b5a84;
+    height: 70px;
+    align-items: center;
+}
+
+.search{
+    text-decoration: none;
+    border: none;
+}
+
+
+
+.nav-links{
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    margin: 10px 0;
+    transition: all 0.3s ease-in-out;
+    transform-origin: center;
+    padding: 10px 30px; 
+    border-radius: 20px;
+}
+
+.nav-links:hover{
+    color: black;
+    background-color: rgba(255, 255, 255, 0.743);
+}
+
+.sources{
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.theme-toggle{
+    border: none;
+    height: 40px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(208, 207, 207, 0.618);
+    border-radius: 20px;
+}
+
+.toggle{
+    width: 34px;
+    height: 34px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transform: translateX(3px);
+    transition: all 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.fa-moon{
+    color:#1b5a84;
+    transition: color 0.2s ease-in-out;
+}
+
+.toggle::before{
+    content: "";
+}
+
+.login-signup{
+    width: 100px;
+    text-decoration: none;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.743);
+    font-family: "Geom", sans-serif;
+    transition: all .2s ease-in-out;
+}   
+
+.login-signup:hover{
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+}
+
+input:checked + .toggle{
+    background-color: black;
+    transform: translateX(43px);
+}
+
+
+.theme-toggle input[type="checkbox"]{
+    display: none;
+}
