@@ -10,6 +10,11 @@ h2 , h1{
     font-family: "Mozilla Headline", sans-serif;
 }
 
+.search-sidebar{
+    width: 90%;
+    height: 40px;
+}
+
 .top-nav{
     display: flex;
     justify-content: space-around;
