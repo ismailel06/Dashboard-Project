@@ -14,15 +14,22 @@
     
     <div>
         <nav class="top-nav">
-            <div>
-                <span class="nav-links">Logo</span>
-                <label for="search">Search:</label>
-                <input type="text" class="search">
-                <a href="#" class="nav-links">Books</a>
-                <a href="#" class="nav-links">Authors</a>
-                <a href="#" class="nav-links">Dashboard</a>
+            
+            
+            <div class="logo-search">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-list"></i>
+                </div>
+                <img src="images/textlogo.png" alt="logo" class="logo-img">
+                <input type="text" class="search" placeholder="Search anything here">
             </div>
             <div class="sources">
+                <div class="notif">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+                <div class="user">
+                    <i class="fa-solid fa-user"></i>
+                </div> 
                 <div class="theme-toggle">
                     <input type="checkbox" id="toggle"/>
                     <label for="toggle" class="toggle"><i class="fa-solid fa-moon"></i></label>
@@ -30,6 +37,13 @@
                 <button class="login-signup">Login</button>
             </div>
         </nav>
+    </div>
+
+    <div class="sidebar">
+        <img src="images/textlogo.png" alt="logo" class="logo-img">
+        <a href="#" class="sidebar-links">Dashboard</a>
+        <a href="#" class="sidebar-links">Books</a>
+        <a href="#" class="sidebar-links">Authors</a>
     </div>
     <script src="script.js"></script>
 </body>

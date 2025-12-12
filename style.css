@@ -6,7 +6,7 @@ body{
     transition: background-color 0.2s ease-in-out;
 }
 
-h1{
+h2 , h1{
     font-family: "Mozilla Headline", sans-serif;
 }
 
@@ -15,30 +15,90 @@ h1{
     justify-content: space-around;
     background-color: #1b5a84;
     height: 70px;
+    gap: 40px;
     align-items: center;
+}
+
+.fa-user , .fa-bell{
+    color: #1b5a84;
+}
+
+.user , .notif , .sidebar-icon{
+    height: 40px;
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.743);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .2s ease-in-out;
+}
+
+.user:hover , .notif:hover ,.sidebar-icon:hover{
+    background-color: white;
+    cursor: pointer;
+}
+
+.sidebar-links{
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 30px;
+    color: #1b5a84;
+    margin: 0;
+    transition: color .1s ease-in-out;
+}
+
+.sidebar-links:hover{
+    color: white;
+}
+
+.sidebar{
+    height: 100vh;
+    width: 0px;
+    display: flex;
+    background-color: #c6b486;
+    transition: width .2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    gap: 30px;
+}
+
+.fa-list{
+    color: #1b5a84;
 }
 
 .search{
     text-decoration: none;
+    height: fit-content;
+    border-radius: 10px;
     border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: "Geom", sans-serif;
+    padding: 0 10px;
+    height: 40px;
+    width: 300px;
 }
-
-
 
 .nav-links{
     text-decoration: none;
-    color: white;
+    color: black;
     font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.743);
     margin: 10px 0;
     transition: all 0.3s ease-in-out;
     transform-origin: center;
     padding: 10px 30px; 
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
-.nav-links:hover{
-    color: black;
-    background-color: rgba(255, 255, 255, 0.743);
+.logo-search{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 .sources{
@@ -53,9 +113,21 @@ h1{
     width: 80px;
     display: flex;
     align-items: center;
-    background-color: rgba(208, 207, 207, 0.618);
+    background-color: rgba(255, 255, 255, 0.743);
     border-radius: 20px;
 }
+
+.logo-img{
+    height: 70px;
+    width: fit-content;
+    object-fit: cover;
+    object-position: center;
+}
+
+.logo-img:hover{
+    cursor: pointer;
+}
+
 
 .toggle{
     width: 34px;
@@ -83,16 +155,17 @@ h1{
 .login-signup{
     width: 100px;
     text-decoration: none;
+    font-size: 16px;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.743);
     font-family: "Geom", sans-serif;
     transition: all .2s ease-in-out;
 }   
 
 .login-signup:hover{
-    font-size: 16px;
     background-color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 
 input:checked + .toggle{
