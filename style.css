@@ -22,8 +22,23 @@ h2 , h1{
     font-family: "Mozilla Headline", sans-serif;
 }
 
+
 .text-primary{
     color: var(--text-primary);
+}
+
+.search-sidebar{
+    width: 90%;
+    height: 40px;
+}
+
+.top-nav{
+    display: flex;
+    justify-content: space-around;
+    background-color: #1b5a84;
+    height: 70px;
+    gap: 40px;
+    align-items: center;
 }
 
 .spa-view.hidden{
