@@ -39,9 +39,7 @@ h2 , h1{
     height: 70px;
     gap: 40px;
     align-items: center;
-}
-
-.spa-view.hidden{
+}.spa-view.hidden{
     display: none !important;
 }
 
@@ -159,6 +157,7 @@ input:checked + .toggle{
     background-color: #2b2b2b3b;
     transition: width .2s ease-in-out;
     display: flex;
+    flex-shrink: 0;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
@@ -222,6 +221,10 @@ input:checked + .toggle{
 .kpi-card{
     padding: 20px;
     background-color: var(--light-grey);
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
 }
 
 /*.sidebar-links{
