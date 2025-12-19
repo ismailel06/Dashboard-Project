@@ -1,19 +1,35 @@
+
+:root{
+    --main-color: #1b5a84;
+    --secondary-color: white;
+    --bg-dark: #0c0e16;
+    --text-primary: #1b5a84;
+    --text-secondary: white;
+    --black-text: black;
+    --light-grey: #2b2b2b3b;
+}
+
 body{
     background-color: white;
     font-family: "Geom", sans-serif;
     min-height: 100vh;
     margin: 0;
     transition: background-color 0.2s ease-in-out;
+    overflow-x: hidden;
 }
 
 h2 , h1{
     font-family: "Mozilla Headline", sans-serif;
 }
 
+.text-primary{
+    color: var(--text-primary);
+}
 
+.search-sidebar{
+    width: 90%;
+    height: 40px;
 
-.sidebar-elems{
-    
 }
 
 .top-nav{
@@ -23,53 +39,10 @@ h2 , h1{
     height: 70px;
     gap: 40px;
     align-items: center;
+}.spa-view.hidden{
+    display: none !important;
 }
 
-.fa-user , .fa-bell{
-    color: #1b5a84;
-}
-
-.user , .notif , .sidebar-icon{
-    height: 40px;
-    width: 40px;
-    background-color: rgba(255, 255, 255, 0.743);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all .2s ease-in-out;
-}
-
-.user:hover , .notif:hover ,.sidebar-icon:hover{
-    background-color: white;
-    cursor: pointer;
-}
-
-.sidebar-links{
-    text-decoration: none;
-    font-size: 18px;
-    padding: 10px 30px;
-    color: #1b5a84;
-    margin: 0;
-    transition: color .1s ease-in-out;
-}
-
-.sidebar-links:hover{
-    color: white;
-}
-
-.sidebar{
-    height: 100vh;
-    width: 0px;
-    display: flex;
-    background-color: #c6b486;
-    transition: width .2s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
-    gap: 30px;
-}
 
 .fa-list{
     color: #1b5a84;
@@ -86,18 +59,6 @@ h2 , h1{
     padding: 0 10px;
     height: 40px;
     width: 300px;
-}
-
-.nav-links{
-    text-decoration: none;
-    color: black;
-    font-size: 16px;
-    background-color: rgba(255, 255, 255, 0.743);
-    margin: 10px 0;
-    transition: all 0.3s ease-in-out;
-    transform-origin: center;
-    padding: 10px 30px; 
-    border-radius: 10px;
 }
 
 .logo-search{
@@ -183,3 +144,110 @@ input:checked + .toggle{
 .theme-toggle input[type="checkbox"]{
     display: none;
 }
+
+.sidebar-heading{
+    font-family: "Geom", sans-serif;
+    color: var(--main-color);
+}
+
+#sidebar-wrapper{
+    min-height: 100vh;
+    display: flex;
+    width: 200px;
+    background-color: #2b2b2b3b;
+    transition: width .2s ease-in-out;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    gap: 30px;
+}
+
+#wrapper.toggled #sidebar-wrapper{
+    width: 0px;
+}
+
+.top-nav{
+    display: flex;
+    justify-content: space-around;
+    background-color: #1b5a84;
+    height: 70px;
+    gap: 40px;
+    align-items: center;
+}
+
+.fa-user , .fa-bell{
+    color: #1b5a84;
+}
+
+.user , .notif , #sidebar-icon{
+    height: 40px;
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.743);
+    border-radius: 50%;
+    display: flex;
+    color: #1b5a84;
+    justify-content: center;
+    align-items: center;
+    transition: all .2s ease-in-out;
+}
+
+.user:hover , .notif:hover ,#sidebar-icon:hover{
+    background-color: white;
+    cursor: pointer;
+}
+
+#sidebar-wrapper .list-group-item{
+    border: none;
+    padding: 20px 70px;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all .2s ease-in-out;
+}
+
+#sidebar-wrapper .list-group-item:hover{
+    color: var(--text-secondary);
+}
+
+#sidebar-wrapper .list-group-item.active{
+    background-color: var(--main-color) !important;
+    color: var(--secondary-color);
+    border-radius: 10px;
+}
+
+.kpi-card{
+    padding: 20px;
+    background-color: var(--light-grey);
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+/*.sidebar-links{
+    text-decoration: none;
+    padding: 20px 30px;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+    font-family: "Geom", sans-serif;
+    padding: 10px 30px;
+    color: #1b5a84;
+    transition: all .1s ease-in-out;
+}
+
+
+.sidebar-links:hover{
+    color: white;
+}
+
+
+.sidebar-links:active{
+    background-color: #1b5a84 !important;
+    border-radius: 0;
+}
+*/
+
