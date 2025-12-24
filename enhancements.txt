@@ -1,0 +1,12 @@
+// add User role
+// save email and password to localstorage
+// export books and authors JSON/CSV
+// Next / previous page for books
+
+
+recomendations:
+    Real login (localStorage)
+    Borrow / Return books
+    Role-based access
+    Toast notifications
+    Better dark mode

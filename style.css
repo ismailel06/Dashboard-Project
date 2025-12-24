@@ -1,13 +1,17 @@
 
 :root{
+    --yellow-brown: rgb(245, 227, 195);
+    --dark-grey: #2c2c2c;
+    --back-third: #bedff5;
     --main-color: #1b5a84;
     --secondary-color: white;
-    --bg-dark: #0c0e16;
+    --bg-dark: #1e1e1e;
     --text-primary: #1b5a84;
     --text-secondary: white;
     --black-text: black;
     --light-grey: #2b2b2b3b;
 }
+
 
 body{
     background-color: white;
@@ -32,14 +36,29 @@ h2 , h1{
 
 }
 
+.page-content-wrapper{
+    flex: 1;
+    min-width: 0;
+}
+
+.container-fluid{
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+}
+
 .top-nav{
     display: flex;
-    justify-content: space-around;
+    white-space: nowrap;
+    justify-content: space-between;
+    padding: 10px 16px;
     background-color: #1b5a84;
-    height: 70px;
-    gap: 40px;
+    gap: 10px;
     align-items: center;
-}.spa-view.hidden{
+    overflow: hidden;
+}
+
+.spa-view.hidden{
     display: none !important;
 }
 
@@ -52,26 +71,29 @@ h2 , h1{
     text-decoration: none;
     height: fit-content;
     border-radius: 10px;
-    border: none;
-    outline: none;
     font-size: 16px;
+    outline: none;
+    flex: 0 1 250px;
     font-family: "Geom", sans-serif;
     padding: 0 10px;
     height: 40px;
-    width: 300px;
+    min-width: 120px;
+    max-width: 400px;
 }
 
 .logo-search{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .sources{
     display: flex;
     justify-content: space-around;
     gap: 20px;
+    flex-shrink: 0;
 }
 
 .theme-toggle{
@@ -120,7 +142,8 @@ h2 , h1{
 }
 
 .login-signup{
-    width: 100px;
+    width: fit-content;
+    padding: 0px 30px;
     text-decoration: none;
     font-size: 16px;
     border: none;
@@ -136,7 +159,7 @@ h2 , h1{
 }
 
 input:checked + .toggle{
-    background-color: black;
+    background-color: #1e1e1e;
     transform: translateX(43px);
 }
 
@@ -150,11 +173,30 @@ input:checked + .toggle{
     color: var(--main-color);
 }
 
+#sup{
+    animation: Pulse 3s infinite;
+    display: inline-block;
+}
+
+@keyframes Pulse {
+    0%{
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(1.25);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+}
+
 #sidebar-wrapper{
     min-height: 100vh;
     display: flex;
     width: 200px;
-    background-color: #2b2b2b3b;
+    background-color: var(--yellow-brown);
     transition: width .2s ease-in-out;
     display: flex;
     flex-shrink: 0;
@@ -220,13 +262,30 @@ input:checked + .toggle{
 
 .kpi-card{
     padding: 20px;
-    background-color: var(--light-grey);
+    background-color: var(--yellow-brown);
 }
 
 #page-content-wrapper {
     min-width: 100vw;
 }
 
+
+@media (max-width: 900px) {
+  .search {
+    display: none;
+  }
+
+  
+}
+
+@media (max-width: 600px) {
+  .sources {
+    gap: 8px;
+  }
+  .logo-img{
+    display: none;
+  }
+}
 /*.sidebar-links{
     text-decoration: none;
     padding: 20px 30px;

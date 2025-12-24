@@ -4,10 +4,56 @@ const toggleicon = document.querySelector(".fa-moon")
 const appendsidebar = document.getElementById("sidebar-icon")
 const sidebar = document.getElementById("sidebar-wrapper")
 const wrapper = document.getElementById("wrapper")
+const genre_wise = document.getElementById('graph');
+const root = document.documentElement;
+const login_btn = document.querySelector('.login-signup');
+const email_input = document.getElementById('email-aria');
+
+function checklogin(){
+    if(login_btn.textContent === "Login"){
+        return;
+    }else{
+        if(confirm("do you want to disconnect ?")){
+            login_btn.textContent = 'Login';
+        }
+    }
+}
+
+function view_hide_password(){
+    const password = document.getElementById('password-aria');
+    const view_hide = document.getElementById('view-password');
+    if(password.type === 'password'){
+        password.type = 'text';
+        view_hide.textContent = "🙈"
+    }else{
+        password.type = "password";
+        view_hide.textContent = "🙉";
+    }
+}
 
 
 
+document.getElementById('login-form').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    login_btn.textContent = email_input.value;
+    const modalEl = document.getElementById('loginModal');
+    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+    modal.hide();
 
+    document.getElementById('password-aria').value = '';
+})
+
+let users = JSON.parse(localStorage.getItem("users")) || 
+[
+    { email: "elgoureissmail@gmail.com" , password:"issmail0770@" , role:"admin"},
+    { email: "elgoureimran@gmail.com" , password:"imran2006@" , role:"user"}
+];
+
+let bookMarkedBooks = JSON.parse(localStorage.getItem('bookMarked')) ||
+[
+    { id: 1, title: "Sonnenfinsternis" , link: "https://openlibrary.org/search?q=Sonnenfinsternis&mode=everything"},
+    { id: 2, title: "Tax administration" , link: "https://openlibrary.org/search?q=Tax%20administration&mode=everything"}
+];
 
 let books = JSON.parse(localStorage.getItem('books')) ||
 [
@@ -28,8 +74,10 @@ let authors = JSON.parse(localStorage.getItem('authors')) ||
 let myChart;
 
 function saveTolocalStorage(){
+    localStorage.setItem('users',JSON.stringify(users))
     localStorage.setItem('books',JSON.stringify(books))
     localStorage.setItem('authors',JSON.stringify(authors))
+    localStorage.setItem('bookMarked',JSON.stringify(bookMarkedBooks))
 }
 
 function generateId(data){
@@ -38,7 +86,8 @@ function generateId(data){
 }
 
 function getAuthorName(authorId){
-    const author = authors.find(a => a.id === authorId)
+    const author = authors.find(a => a.id == authorId)
+    console.log("this one matters "+ author);
     return author ? author.name : "Unknown";
 }
 
@@ -72,8 +121,31 @@ function switchView(viewId){
     }else if(viewId === 'books-view'){
         populateAuthorsSelect('book-author')
         renderBooks();
+        renderBookMarked();
     }else if(viewId === 'authors-view'){
         renderAuthors();
+    }
+}
+
+
+
+function AddToBookMark(bookData){
+    if(bookData){
+        if(bookMarkedBooks.find( b => b.title === bookData.title )){
+            showToast("This book exists already in the Bookmark list","danger");
+            return;
+        }else{
+            const url = "https://openlibrary.org/search?q="+bookData.title+"&mode=everything";
+            const newBookMark = {
+                id: generateId(bookMarkedBooks),
+                title: bookData.title,
+                link: url
+            }
+
+            bookMarkedBooks.push(newBookMark);
+            saveTolocalStorage();
+            renderBookMarked();
+        }
     }
 }
 
@@ -124,7 +196,7 @@ function renderAuthors(){
     }
 
     authors.forEach(a =>{
-        const bookCount = books.filter(b => b.authorId === a.id).length;
+        const bookCount = books.filter(b => b.authorId == a.id).length;
         const row = `
             <tr>
                 <td>${a.name}</td>
@@ -144,7 +216,7 @@ function populateAuthorsSelect(selectId, selectedId = null){
     const selectElement = document.getElementById(selectId);
     selectElement.innerHTML = '<option value="">Choose an Author ...</option>'
     authors.forEach(a => {
-        const selectedAttr = a.id === selectedId ? 'selected' : '';
+        const selectedAttr = a.id == selectedId ? 'selected' : '';
         selectElement.innerHTML += `<option value="${a.id}" ${selectedAttr}>${a.name}</option>`;
     });
 }
@@ -187,7 +259,7 @@ document.getElementById('book-form').addEventListener('submit',function(e){
     let available = parseInt(document.getElementById('book-available').value);
 
     if(available > copies){
-        alert("The Number of available copies must be less than Total copies");
+        showToast("The Number of available copies must be less than Total copies","warning");
         return;
     }
 
@@ -213,6 +285,8 @@ document.getElementById('book-form').addEventListener('submit',function(e){
             books.push(newBook);
     }
 
+    console.log(newBook.authorId);
+
     saveTolocalStorage();
 
     const modalElement = document.getElementById('bookModal')
@@ -221,6 +295,8 @@ document.getElementById('book-form').addEventListener('submit',function(e){
 
     renderBooks();
     renderDashboard();
+
+
 });
 
 function deleteBook(id){
@@ -231,6 +307,37 @@ function deleteBook(id){
         renderDashboard();
     }
 }
+
+function UnbookMark(element){
+    if(confirm("Are you sure you want to Unbookmark this book ?")){
+        bookMarkedBooks = bookMarkedBooks.filter(b =>b.title != element);
+        saveTolocalStorage();
+        renderBookMarked();
+    }
+}
+
+function renderBookMarked(){
+    const listElement = document.getElementById('bookMark-list');
+    listElement.innerHTML = '';
+
+    if(bookMarkedBooks.length === 0){
+        listElement.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No bookMarks</td></tr>';
+        return;
+    }
+
+    bookMarkedBooks.forEach(b =>{
+        const row = `
+            <tr>
+                <td>${b.title}</td>
+                <td><strong><a href="${b.link}" target="_blank">${b.link}</a></strong></td>
+                <td><button class="btn btn-secondary btn-sm  me-3"><i class="fa-regular fa-bookmark" onclick="UnbookMark('${b.title}')"></i></button></td>
+            </tr>
+        `;
+
+        listElement.innerHTML += row;
+    })
+}
+
 
 function renderBooks(){
     const listElement = document.getElementById('books-list');
@@ -254,7 +361,7 @@ function renderBooks(){
 
     if(filterdBooks.length === 0)
     {
-        listElement.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No book matches Search/filter </td></tr>';
+        listElement.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No book matches Search/filter </td></tr>';
         return;
     }
 
@@ -277,10 +384,46 @@ function renderBooks(){
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>
+                <td>
+                    <button class="btn btn-sm me-2 me-2" style="background-color: var(--main-color);" onclick="handleAvailableCopies('minus',${b.id})">
+                        <i class="fas fa-minus text-white"></i>
+                    </button>
+                    <button class="btn btn-sm me-2 me-2" style="background-color: var(--main-color);" onclick="handleAvailableCopies('plus',${b.id})">
+                        <i class="fas fa-plus text-white"></i>
+                    </button>
+                </td>
             </tr>
         `;
         listElement.innerHTML += row;
     })
+}
+
+function handleAvailableCopies(option , BookId){
+    let book = books.find(b => b.id === BookId);
+    if(!book){
+        console.log('doesnt make any f*** sense');
+        return;
+    }
+    if(option === 'minus'){
+        if(book.available > 0)
+        {
+            book.available -= 1;
+        }else{
+            showToast("you have reached 0 items","danger");
+            return;
+        }
+    }else if(option === 'plus'){
+        if(book.available < book.total){
+            book.available += 1;
+        }else{
+            showToast("you have reached the maximum amount of books in total","warning");
+            return;
+        }
+    }
+
+    saveTolocalStorage();
+    renderBooks();
+    renderDashboard();
 }
 
 document.getElementById('book-search').addEventListener("keyup",renderBooks);
@@ -301,14 +444,14 @@ function renderDashboard() {
 
     const kpiHtml = kpis.map(kpi => 
         `
-            <div class="col-md-3">
-                <div class="kpi-card text-${kpi.color}">
+            <div class="col-md-3 ">
+                <div class="kpi-card text-${kpi.color} rounded">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h5 class="fs-2">${kpi.value}</h5>
-                            <p class="fs-5 mb-0 text-muted">${kpi.title}</p>
+                            <p class="fs-5 mb-0 text-${kpi.color} fw-bold">${kpi.title}</p>
                         </div>
-                        <i class="fas fa-${kpi.icon} fs-1 text-${kpi.color} opacity-25"></i>
+                        <i class="fas fa-${kpi.icon} fs-1 text-${kpi.color} opacity-100"></i>
                     </div>
                 </div>
             </div>
@@ -373,12 +516,13 @@ document.getElementById('query-search-form').addEventListener('submit', function
 function fetchOpenLibraryData() {
     const apiResultElement = document.getElementById('api-result');
     const query_input = document.getElementById('query-search');
+    const apiTable = document.getElementById('api-books-list');
     let query = 'Programming';
 
     if(query_input && query_input.value.trim()!== ''){
         query = query_input.value.trim();
     }
-    const url = `https://openlibrary.org/search.json?q=${query}&limit=3`;
+    const url = `https://openlibrary.org/search.json?q=${query}&limit=10`;
 
     apiResultElement.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i> Loding OpenLibrary data ...`;
     let search_term = document.getElementById('search-term');
@@ -393,19 +537,25 @@ fetch(url)
     .then(data => {
         const numFound = data.numFound;
         const Apibooks = data.docs;
-
+        console.log(Apibooks.length);
         let resultHTML = `<p class="fw-bold text-dark">OpenLibrary API has found <span class="text-primary">${numFound.toLocaleString()}</span> results for "${query}" .</p>`;
-
+        let resultApi = '';
         if(Apibooks && Apibooks.length > 0){
-            resultHTML += `<p class="mt-2 mb-1">Some results (max 3):</p><ul>`;
+            resultHTML += `<p class="mt-2 mb-1">Some results (max 10):</p>`;
             Apibooks.forEach(b =>{
                 const title = b.title || 'Unknown Title';
                 const author = b.author_name ? b.author_name.join(', ') : 'Unknown Author(s)' ;
-                resultHTML += `<li><a href="#" id="directlink" value="${title}" onclick="redirectToOpenLibrary(value)"><strong>${title}</strong></a> by ${author} (${b.first_publish_year || 'N/A'})</li>`;
+                const bookData = encodeURIComponent(JSON.stringify(b));
+                resultApi += `<tr>
+                    <td><a href="#" id="directlink" data-title="${title}" onclick="redirectToOpenLibrary(this)"><strong>${title}</strong></a></td>
+                    <td>${author}</td>
+                    <td>${b.first_publish_year || 'N/A'}</td>
+                    <td><button class="btn btn-primary btn-sm me-2" onclick="AddToBookMark(JSON.parse(decodeURIComponent('${bookData}')))"><i class="fas fa-bookmark"></i></button></td>
+                </tr>`;
             });
-            resultHTML += `</ul></p>`;
         }
         apiResultElement.innerHTML = resultHTML;
+        apiTable.innerHTML = resultApi;
         console.log('button clicked');
     })
     .catch(error =>{
@@ -421,14 +571,14 @@ window.onload = function() {
     
 };
 
-function redirectToOpenLibrary(query){
-
-    const url = 'https://openlibrary.org/';
-    if(query !== '')
-    {
-        url += `/search?q=${encodeURIComponent(query)}&mode=everything` 
-        window.open(url,"_blank");
+function redirectToOpenLibrary(linkElement){
+    const title = linkElement.dataset.title;
+    let url = 'https://openlibrary.org/';
+    if(title !== ''){
+        url += `/search?q=${encodeURIComponent(title)}&mode=everything`;
     }
+    console.log(url);
+    window.open(url,"_blank");
 }
 
 appendsidebar.addEventListener("click" ,()=>{
@@ -437,7 +587,7 @@ appendsidebar.addEventListener("click" ,()=>{
 
 toggle.addEventListener("change",function(){
     if(toggle.checked){
-        bodyelement.style.backgroundColor = "#0c0e16"
+        bodyelement.style.backgroundColor = "#1e1e1e"
         toggleicon.style.color = "white"
         bodyelement.style.color = "white"
     }else{
@@ -446,4 +596,17 @@ toggle.addEventListener("change",function(){
         bodyelement.style.color = "black"
     }
 })
+
+function showToast(message, type = "success") {
+    const toastEl = document.getElementById("appToast");
+    const toastBody = document.getElementById("toast-message");
+
+    toastBody.textContent = message;
+
+    toastEl.classList.remove("bg-success", "bg-danger", "bg-warning");
+    toastEl.classList.add(`bg-${type}`);
+
+    const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+    toast.show();
+}
 
