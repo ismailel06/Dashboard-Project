@@ -1,13 +1,13 @@
 
 :root{
-    --yellow-brown: rgb(245, 227, 195);
+    --yellow-brown: rgba(239, 158, 66, 0.401);
     --dark-grey: #2c2c2c;
     --back-third: #bedff5;
     --main-color: #1b5a84;
     --secondary-color: white;
     --bg-dark: #1e1e1e;
     --text-primary: #1b5a84;
-    --text-secondary: white;
+    --text-secondary: rgba(248, 199, 125, 0.356);
     --black-text: black;
     --light-grey: #2b2b2b3b;
 }

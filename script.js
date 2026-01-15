@@ -361,7 +361,7 @@ function renderBooks(){
 
     if(filterdBooks.length === 0)
     {
-        listElement.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No book matches Search/filter </td></tr>';
+        listElement.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No book matches Search/filter </td></tr>';
         return;
     }
 
@@ -527,7 +527,8 @@ function fetchOpenLibraryData() {
     apiResultElement.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i> Loding OpenLibrary data ...`;
     let search_term = document.getElementById('search-term');
     search_term.textContent = `"${query}"`; 
-fetch(url)
+
+    fetch(url)
     .then(response =>{
         if(!response.ok){
             throw new Error(`HTTP Error : ${response.status}`);
